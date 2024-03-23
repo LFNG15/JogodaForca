@@ -2,6 +2,7 @@
 #include <string>
 #include <time.h>
 #define INITIAL 0
+#define END 5
 
 using namespace std;
 
@@ -22,7 +23,7 @@ string retornaPalavraAleatoria()
 
 string retornaPalavraComMascara(string palavra, int tamanhoDaPalavra)
 {
-     int cont = INITIAL;
+    int cont = INITIAL;
     string palavraComMascara;
 
     while (cont < tamanhoDaPalavra)
@@ -34,6 +35,14 @@ string retornaPalavraComMascara(string palavra, int tamanhoDaPalavra)
     return palavraComMascara;
 }
 
+void exibeStatus(string palavraComMascara, int tamanhoDaPalavra, int tentativasRestantes)
+{
+
+    // cout << "A palavra secreta: " << palavra << "(Tamanho:" << tamanhoDaPalavra << ")";
+    cout << "Palavra: " << palavraComMascara << "(Tamanho:" << tamanhoDaPalavra << ")";
+    cout << "\nTentativas restantes:" << tentativasRestantes;
+}
+
 void jogarSozinho()
 {
     string palavra = retornaPalavraAleatoria();
@@ -41,8 +50,20 @@ void jogarSozinho()
     int tamanhoDaPalavra = palavra.size();
     string palavraComMascara = retornaPalavraComMascara(palavra, tamanhoDaPalavra);
 
-    cout << "A palavra secreta: " << palavra << "(Tamanho:" << tamanhoDaPalavra << ")";
-    cout << "\nMascara:" << palavraComMascara;
+    int tentativas = INITIAL, maximoDeTentativas = END;
+    char letra;
+
+    while (maximoDeTentativas - tentativas > INITIAL)
+    {
+        limpaTela();
+        
+        exibeStatus(palavraComMascara, tamanhoDaPalavra, maximoDeTentativas - tentativas);
+
+        cout << "Digite uma letra:";
+        cin >> letra;
+
+        tentativas++;
+    }
 }
 
 void menuInicial()
