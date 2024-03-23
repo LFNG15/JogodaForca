@@ -51,18 +51,38 @@ void jogarSozinho()
     string palavraComMascara = retornaPalavraComMascara(palavra, tamanhoDaPalavra);
 
     int tentativas = INITIAL, maximoDeTentativas = END;
+    int cont = INITIAL;
     char letra;
 
-    while (maximoDeTentativas - tentativas > INITIAL)
+    while (palavra != palavraComMascara && maximoDeTentativas - tentativas > INITIAL)
     {
         limpaTela();
-        
+
         exibeStatus(palavraComMascara, tamanhoDaPalavra, maximoDeTentativas - tentativas);
 
         cout << "Digite uma letra:";
         cin >> letra;
 
+        for (cont = 0; cont < tamanhoDaPalavra; cont++)
+        {
+            if (palavra[cont] == letra)
+            {
+                palavraComMascara[cont] = palavra[cont];
+            }
+        }
+
         tentativas++;
+    }
+
+    if (palavra == palavraComMascara)
+    {
+        limpaTela();
+        cout << "Parabéns";
+    }
+    else
+    {
+        limpaTela();
+        cout << "Tu é burro falante  é?";
     }
 }
 
