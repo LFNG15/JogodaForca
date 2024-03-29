@@ -35,11 +35,12 @@ string retornaPalavraComMascara(string palavra, int tamanhoDaPalavra)
     return palavraComMascara;
 }
 
-void exibeStatus(string palavraComMascara, int tamanhoDaPalavra, int tentativasRestantes, string letrasJaArriscadas)
+void exibeStatus(string palavraComMascara, int tamanhoDaPalavra, int tentativasRestantes, string letrasJaArriscadas, string mensagem)
 {
 
     // cout << "A palavra secreta: " << palavra << "(Tamanho:" << tamanhoDaPalavra << ")";
-    cout << "Palavra: " << palavraComMascara << "(Tamanho:" << tamanhoDaPalavra << ")";
+    cout << mensagem;
+    cout << "\nPalavra: " << palavraComMascara << "(Tamanho:" << tamanhoDaPalavra << ")";
     cout << "\nTentativas restantes:" << tentativasRestantes;
 
     int cont;
@@ -61,13 +62,14 @@ void jogarSozinho()
     int cont = INITIAL;
     char letra;
     string letrasJaArriscadas;
-    bool jáDigitouLetra = false;
+    string mensagem = "Bem vindo ao jogo";
+    bool jáDigitouLetra = false, acertouLetra = false;
 
     while (palavra != palavraComMascara && maximoDeTentativas - tentativas > INITIAL)
     {
         limpaTela();
 
-        exibeStatus(palavraComMascara, tamanhoDaPalavra, maximoDeTentativas - tentativas, letrasJaArriscadas);
+        exibeStatus(palavraComMascara, tamanhoDaPalavra, maximoDeTentativas - tentativas, letrasJaArriscadas, mensagem);
 
         cout << "Digite uma letra:";
         cin >> letra;
@@ -76,7 +78,7 @@ void jogarSozinho()
         {
             if (letrasJaArriscadas[cont] == letra)
             {
-                cout << "Essa letra já foi digitada";
+                mensagem = "Essa letra já foi digitada";
                 jáDigitouLetra = true;
             }
         }
@@ -90,11 +92,22 @@ void jogarSozinho()
                 if (palavra[cont] == letra)
                 {
                     palavraComMascara[cont] = palavra[cont];
+
+                    acertouLetra = true;
                 }
             }
+            if (acertouLetra == false)
+            {
+                mensagem = "Você errou uma letra";
+            }
+            else
+            {
+                mensagem = "Você acertou uma letra";
+            }
+            tentativas++;
         }
-
-        tentativas++;
+        jáDigitouLetra = false;
+        acertouLetra = false;
     }
 
     if (palavra == palavraComMascara)
