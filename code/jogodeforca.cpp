@@ -35,12 +35,19 @@ string retornaPalavraComMascara(string palavra, int tamanhoDaPalavra)
     return palavraComMascara;
 }
 
-void exibeStatus(string palavraComMascara, int tamanhoDaPalavra, int tentativasRestantes)
+void exibeStatus(string palavraComMascara, int tamanhoDaPalavra, int tentativasRestantes, string letrasJaArriscadas)
 {
 
     // cout << "A palavra secreta: " << palavra << "(Tamanho:" << tamanhoDaPalavra << ")";
     cout << "Palavra: " << palavraComMascara << "(Tamanho:" << tamanhoDaPalavra << ")";
     cout << "\nTentativas restantes:" << tentativasRestantes;
+
+    int cont;
+    cout << "\nLetras arriscadas:";
+    for (cont = 0; cont < letrasJaArriscadas.size(); cont++)
+    {
+        cout << letrasJaArriscadas[cont] << ", ";
+    }
 }
 
 void jogarSozinho()
@@ -53,21 +60,37 @@ void jogarSozinho()
     int tentativas = INITIAL, maximoDeTentativas = END;
     int cont = INITIAL;
     char letra;
+    string letrasJaArriscadas;
+    bool jáDigitouLetra = false;
 
     while (palavra != palavraComMascara && maximoDeTentativas - tentativas > INITIAL)
     {
         limpaTela();
 
-        exibeStatus(palavraComMascara, tamanhoDaPalavra, maximoDeTentativas - tentativas);
+        exibeStatus(palavraComMascara, tamanhoDaPalavra, maximoDeTentativas - tentativas, letrasJaArriscadas);
 
         cout << "Digite uma letra:";
         cin >> letra;
 
-        for (cont = 0; cont < tamanhoDaPalavra; cont++)
+        for (cont = 0; cont < tentativas; cont++)
         {
-            if (palavra[cont] == letra)
+            if (letrasJaArriscadas[cont] == letra)
             {
-                palavraComMascara[cont] = palavra[cont];
+                cout << "Essa letra já foi digitada";
+                jáDigitouLetra = true;
+            }
+        }
+
+        if (jáDigitouLetra == false)
+        {
+            letrasJaArriscadas += letra;
+
+            for (cont = 0; cont < tamanhoDaPalavra; cont++)
+            {
+                if (palavra[cont] == letra)
+                {
+                    palavraComMascara[cont] = palavra[cont];
+                }
             }
         }
 
